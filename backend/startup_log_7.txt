@@ -1,0 +1,14 @@
+2026-01-22 22:18:57,968 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-01-22 22:18:58,367 INFO sqlalchemy.engine.Engine SELECT users.email, users.auth_provider, users.language_preference, users.user_id, users.hashed_password, users.created_at, users.updated_at 
+FROM users 
+WHERE users.email = ?
+2026-01-22 22:18:58,406 INFO sqlalchemy.engine.Engine [generated in 0.04200s] ('test_final2@example.com',)
+2026-01-22 22:18:59,728 INFO sqlalchemy.engine.Engine ROLLBACK
+INFO:     127.0.0.1:51365 - "POST /api/v1/auth/register HTTP/1.1" 500 Internal Server Error
+2026-01-22 22:19:00,547 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-01-22 22:19:00,585 INFO sqlalchemy.engine.Engine SELECT users.email, users.auth_provider, users.language_preference, users.user_id, users.hashed_password, users.created_at, users.updated_at 
+FROM users 
+WHERE users.email = ?
+2026-01-22 22:19:00,588 INFO sqlalchemy.engine.Engine [cached since 2.225s ago] ('test_final2@example.com',)
+2026-01-22 22:19:00,600 INFO sqlalchemy.engine.Engine ROLLBACK
+INFO:     127.0.0.1:51367 - "POST /api/v1/auth/login HTTP/1.1" 400 Bad Request

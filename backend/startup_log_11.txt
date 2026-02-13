@@ -1,0 +1,42 @@
+2026-01-25 17:45:16,201 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-01-25 17:45:16,287 INFO sqlalchemy.engine.Engine SELECT users.email, users.auth_provider, users.language_preference, users.user_id, users.hashed_password, users.created_at, users.updated_at 
+FROM users 
+WHERE users.email = ?
+2026-01-25 17:45:16,300 INFO sqlalchemy.engine.Engine [generated in 0.01292s] ('task_user_final_check_user@example.com',)
+2026-01-25 17:45:16,816 INFO sqlalchemy.engine.Engine INSERT INTO users (email, auth_provider, language_preference, user_id, hashed_password, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?)
+2026-01-25 17:45:16,855 INFO sqlalchemy.engine.Engine [generated in 0.03975s] ('task_user_final_check_user@example.com', 'local', 'en', '38e6cd3bf8254324b04a9ded6cf6e5d7', '$2b$12$8tjNf0A//UsYBY8yQ6UW/ufAOQYu6eQPU8Qn1D35fkqL7P8cpo60u', '2026-01-25 12:45:16.807007', '2026-01-25 12:45:16.807023')
+2026-01-25 17:45:16,906 INFO sqlalchemy.engine.Engine COMMIT
+2026-01-25 17:45:17,036 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-01-25 17:45:17,043 INFO sqlalchemy.engine.Engine SELECT users.email, users.auth_provider, users.language_preference, users.user_id, users.hashed_password, users.created_at, users.updated_at 
+FROM users 
+WHERE users.user_id = ?
+2026-01-25 17:45:17,045 INFO sqlalchemy.engine.Engine [generated in 0.00159s] ('38e6cd3bf8254324b04a9ded6cf6e5d7',)
+2026-01-25 17:45:17,110 INFO sqlalchemy.engine.Engine ROLLBACK
+INFO:     127.0.0.1:52729 - "POST /api/v1/auth/register HTTP/1.1" 200 OK
+2026-01-25 17:45:17,147 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-01-25 17:45:17,153 INFO sqlalchemy.engine.Engine INSERT INTO tasks (title, description, priority, due_date, completed, task_id, user_id, created_at, updated_at, deleted_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+2026-01-25 17:45:17,154 INFO sqlalchemy.engine.Engine [generated in 0.00236s] ('Test Task 1', 'This is a test task', 'high', None, 0, '2a91318168d343648250717d0949c657', '38e6cd3bf8254324b04a9ded6cf6e5d7', '2026-01-25 12:45:17.142705', '2026-01-25 12:45:17.142714', None)
+2026-01-25 17:45:17,161 INFO sqlalchemy.engine.Engine COMMIT
+2026-01-25 17:45:17,268 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-01-25 17:45:17,273 INFO sqlalchemy.engine.Engine SELECT tasks.title, tasks.description, tasks.priority, tasks.due_date, tasks.completed, tasks.task_id, tasks.user_id, tasks.created_at, tasks.updated_at, tasks.deleted_at 
+FROM tasks 
+WHERE tasks.task_id = ?
+2026-01-25 17:45:17,274 INFO sqlalchemy.engine.Engine [generated in 0.00125s] ('2a91318168d343648250717d0949c657',)
+2026-01-25 17:45:17,283 INFO sqlalchemy.engine.Engine INSERT INTO activity_logs (log_id, task_id, user_id, action, changes, created_at) VALUES (?, ?, ?, ?, ?, ?)
+2026-01-25 17:45:17,284 INFO sqlalchemy.engine.Engine [generated in 0.00156s] ('c6943c78e39a4b658936a5320e6be6a8', '2a91318168d343648250717d0949c657', '38e6cd3bf8254324b04a9ded6cf6e5d7', 'task.created', 'null', '2026-01-25 12:45:17.280152')
+2026-01-25 17:45:17,291 INFO sqlalchemy.engine.Engine COMMIT
+2026-01-25 17:45:17,414 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-01-25 17:45:17,419 INFO sqlalchemy.engine.Engine SELECT activity_logs.log_id, activity_logs.task_id, activity_logs.user_id, activity_logs.action, activity_logs.changes, activity_logs.created_at 
+FROM activity_logs 
+WHERE activity_logs.log_id = ?
+2026-01-25 17:45:17,421 INFO sqlalchemy.engine.Engine [generated in 0.00150s] ('c6943c78e39a4b658936a5320e6be6a8',)
+2026-01-25 17:45:17,432 INFO sqlalchemy.engine.Engine ROLLBACK
+INFO:     127.0.0.1:52729 - "POST /api/v1/tasks/ HTTP/1.1" 200 OK
+2026-01-25 17:45:17,449 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-01-25 17:45:17,455 INFO sqlalchemy.engine.Engine SELECT tasks.title, tasks.description, tasks.priority, tasks.due_date, tasks.completed, tasks.task_id, tasks.user_id, tasks.created_at, tasks.updated_at, tasks.deleted_at 
+FROM tasks 
+WHERE tasks.user_id = ? AND tasks.deleted_at IS NULL
+ LIMIT ? OFFSET ?
+2026-01-25 17:45:17,456 INFO sqlalchemy.engine.Engine [generated in 0.00164s] ('38e6cd3bf8254324b04a9ded6cf6e5d7', 50, 0)
+2026-01-25 17:45:17,464 INFO sqlalchemy.engine.Engine ROLLBACK
+INFO:     127.0.0.1:52729 - "GET /api/v1/tasks/ HTTP/1.1" 200 OK

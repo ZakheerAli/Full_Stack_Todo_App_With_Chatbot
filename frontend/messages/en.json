@@ -1,0 +1,23 @@
+{
+  "common": {
+    "title": "NexaFlow",
+    "tasks": "Tasks",
+    "settings": "Settings",
+    "savedViews": "Saved Views",
+    "today": "Today",
+    "highPriority": "High Priority",
+    "searchPlaceholder": "Search tasks...",
+    "createTask": "Create Task",
+    "login": "Login",
+    "signup": "Sign Up",
+    "logout": "Logout"
+  },
+  "tasks": {
+    "priority": "Priority",
+    "dueDate": "Due Date",
+    "status": "Status",
+    "allStatus": "All Status",
+    "pending": "Pending",
+    "completed": "Completed"
+  }
+}

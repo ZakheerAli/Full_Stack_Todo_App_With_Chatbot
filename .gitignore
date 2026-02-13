@@ -1,0 +1,31 @@
+# General
+.DS_Store
+*.log
+.env
+.env.*
+!.env.example
+
+# Python / FastAPI (Backend)
+backend/__pycache__/
+backend/*.pyc
+backend/.venv/
+backend/venv/
+backend/.pytest_cache/
+backend/.coverage
+backend/htmlcov/
+backend/dist/
+backend/build/
+backend/*.egg-info/
+
+# Node / Next.js (Frontend)
+frontend/node_modules/
+frontend/.next/
+frontend/dist/
+frontend/build/
+frontend/coverage/
+frontend/.vercel/
+frontend/*.tsbuildinfo
+
+# IDEs
+.vscode/
+.idea/

@@ -1,0 +1,23 @@
+{
+  "common": {
+    "title": "نیکسا فلو",
+    "tasks": "کام",
+    "settings": "ترتیبات",
+    "savedViews": "محفوظ شدہ مناظر",
+    "today": "آج",
+    "highPriority": "اعلی ترجیح",
+    "searchPlaceholder": "کام تلاش کریں...",
+    "createTask": "کام بنائیں",
+    "login": "لاگ ان",
+    "signup": "سائن اپ",
+    "logout": "لاگ آؤٹ"
+  },
+  "tasks": {
+    "priority": "ترجیح",
+    "dueDate": "تاریخ",
+    "status": "حالت",
+    "allStatus": "تمام حالات",
+    "pending": "زیر التواء",
+    "completed": "مکمل"
+  }
+}

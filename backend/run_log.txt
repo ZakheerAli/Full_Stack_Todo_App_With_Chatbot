@@ -1,0 +1,10 @@
+2026-02-10 22:26:47,698 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-02-10 22:26:47,736 INFO sqlalchemy.engine.Engine PRAGMA main.table_info("users")
+2026-02-10 22:26:47,779 INFO sqlalchemy.engine.Engine [raw sql] ()
+2026-02-10 22:26:47,837 INFO sqlalchemy.engine.Engine PRAGMA main.table_info("tasks")
+2026-02-10 22:26:47,879 INFO sqlalchemy.engine.Engine [raw sql] ()
+2026-02-10 22:26:47,928 INFO sqlalchemy.engine.Engine PRAGMA main.table_info("activity_logs")
+2026-02-10 22:26:47,968 INFO sqlalchemy.engine.Engine [raw sql] ()
+2026-02-10 22:26:48,016 INFO sqlalchemy.engine.Engine PRAGMA main.table_info("saved_views")
+2026-02-10 22:26:48,057 INFO sqlalchemy.engine.Engine [raw sql] ()
+2026-02-10 22:26:48,107 INFO sqlalchemy.engine.Engine COMMIT
