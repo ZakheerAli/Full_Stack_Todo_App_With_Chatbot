@@ -1,27 +1,48 @@
+﻿<div align="center">
+
 # NexaFlow
 
-NexaFlow is a full-stack task manager with a conversational assistant. Manage tasks from the dashboard or ask the assistant to create, find, update, or complete them. Conversations are saved with your account.
+**A task dashboard you can talk to.**
 
-## Stack
+Plan your work with priorities, due dates, and filters. When a task comes to mind, add it in plain language and get back to what you were doing.
 
-- **Frontend:** Next.js, React, TypeScript, Tailwind CSS, and TanStack Query
-- **Backend:** FastAPI, SQLModel, and JWT authentication
-- **Database:** SQLite for local development and PostgreSQL for hosting
-- **Assistant:** Gemini with task-management tools scoped to the signed-in user
+[Quick start](#quick-start) · [Architecture](#architecture) · [Verification](#verification) · [Deployment](#deployment)
 
-## Run locally
+</div>
 
-Install Python 3.11+, Poetry, and Node.js. Run the backend and frontend in separate terminals.
+## A day with NexaFlow
 
-**Backend**
+| Say this in chat | Then open the dashboard |
+| --- | --- |
+| “Remind me to buy milk.” | Find the new task in your list. |
+| “Show my pending tasks.” | Use status and priority filters to focus your view. |
+| “Mark ‘buy milk’ as complete.” | See the task move into your completed list. |
 
-```sh
-cd backend
-poetry install --only main --no-root
-poetry run uvicorn src.main:app --reload --port 8000
+Search and edit tasks directly from the dashboard at any time. Sign in again to revisit your saved tasks and conversations.
+
+## Architecture
+
+```mermaid
+flowchart LR
+    UI["Next.js · Dashboard and chat"] --> API["FastAPI · Auth, tasks, conversations"]
+    API --> DB[("SQLite or PostgreSQL")]
+    API --> AI["Gemini · Task tool selection"]
 ```
 
-Create `backend/.env` using the settings below. Set a random secret and your own Gemini API key.
+| Layer | Implementation |
+| --- | --- |
+| Interface | Next.js, React, TypeScript, Tailwind CSS, TanStack Query |
+| API | FastAPI with JWT authentication and interactive OpenAPI docs |
+| Data | SQLModel with SQLite locally and PostgreSQL for hosting |
+| Assistant | Gemini selects task tools scoped to the signed-in account |
+
+## Quick start
+
+You'll need Python 3.11+, Poetry, Node.js, and a Gemini API key for live chat.
+
+**1. Configure the API**
+
+Create `backend/.env` and replace the placeholder values with a random secret and your Gemini key.
 
 ```dotenv
 DATABASE_URL=sqlite+aiosqlite:///./nexaflow.db
@@ -29,7 +50,15 @@ SECRET_KEY=replace-with-a-random-secret
 GEMINI_API_KEY=replace-with-your-key
 ```
 
-**Frontend**
+```sh
+cd backend
+poetry install --only main --no-root
+poetry run uvicorn src.main:app --reload --port 8000
+```
+
+**2. Start the web app**
+
+In a second terminal, run these commands from the repository root.
 
 ```sh
 cd frontend
@@ -37,17 +66,28 @@ npm ci
 npm run dev
 ```
 
-Open [the app](http://localhost:3000) and register. The [API reference](http://127.0.0.1:8000/docs) is available while FastAPI runs.
+Register at [localhost:3000](http://localhost:3000). The [interactive API reference](http://127.0.0.1:8000/docs) runs alongside the app.
 
 ## Verification
 
-Run `poetry install --no-root` from `backend` to include test dependencies, then run `poetry run python -m unittest test_chat_integration`. The integration test uses an isolated SQLite database and checks task creation, listing, completion, conversation history after signing in again, and account isolation. Set `NEXAFLOW_TEST_LIVE_AI=1` to run the same flow against Gemini. Run `npm run build` from `frontend` to verify the production build.
+From `backend`, install the test dependencies and run the chat integration test.
 
-## Deployment without Docker
+```sh
+poetry install --no-root
+poetry run python -m unittest test_chat_integration
+```
 
-1. Create a Python web service on Render from the `backend` directory. Use `poetry install --only main --no-root` as the build command and `poetry run uvicorn src.main:app --host 0.0.0.0 --port $PORT` as the start command.
-2. Set `DATABASE_URL` to a managed PostgreSQL connection URL with the `postgresql+asyncpg://` scheme. Set `SECRET_KEY` and `GEMINI_API_KEY` on the backend.
-3. Import the repo into Vercel. Set the root to `frontend` and set `NEXT_PUBLIC_API_URL` to your Render service URL followed by `/api/v1`.
-4. Set `CORS_ORIGINS` on Render to a JSON array containing the Vercel origin, for example `["https://your-app.vercel.app"]`. Redeploy and verify registration, task operations, and conversation history on the public URL.
+The test uses isolated SQLite and covers task creation, listing, completion, conversation history after signing in again, and account isolation. Set `NEXAFLOW_TEST_LIVE_AI=1` to run the same flow against Gemini. From `frontend`, run `npm run build` to check the production build.
 
-See the [full-stack spec](specs/001-phase-2-full-stack/spec.md) and [chatbot spec](specs/002-phase-3-chatbot/spec.md) for the project requirements.
+## Deployment
+
+| Service | Project root | Settings |
+| --- | --- | --- |
+| Render Python web service | `backend` | Build with `poetry install --only main --no-root`. Start with `poetry run uvicorn src.main:app --host 0.0.0.0 --port $PORT`. |
+| Vercel Next.js project | `frontend` | Set `NEXT_PUBLIC_API_URL` to your Render URL followed by `/api/v1`. |
+
+Set `SECRET_KEY`, `GEMINI_API_KEY`, and `DATABASE_URL` on Render. Use a managed PostgreSQL URL with the `postgresql+asyncpg://` scheme. Once Vercel assigns your domain, set `CORS_ORIGINS` on Render to a JSON array such as `["https://your-app.vercel.app"]`. Redeploy the API, then verify registration, task operations, and saved conversation history from the hosted app.
+
+## Project specs
+
+[Full-stack application](specs/001-phase-2-full-stack/spec.md) · [Conversational assistant](specs/002-phase-3-chatbot/spec.md)
