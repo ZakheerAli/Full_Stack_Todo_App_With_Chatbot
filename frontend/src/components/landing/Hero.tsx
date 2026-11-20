@@ -3,7 +3,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { Button } from '../ui/button';
-import { ArrowRight, Sparkles } from 'lucide-react';
+import { ArrowRight, Sparkles, MessageSquare } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 export function Hero() {
@@ -82,6 +82,10 @@ export function Hero() {
                    <div className="h-2 w-full bg-primary/20 rounded" />
                    <div className="h-2 w-2/3 bg-white/5 rounded" />
                    <div className="h-2 w-3/4 bg-white/5 rounded" />
+                   <div className="flex items-center gap-2">
+                      <MessageSquare className="w-3 h-3 text-primary/60" />
+                      <div className="h-2 w-1/2 bg-white/5 rounded" />
+                   </div>
                 </div>
                 <div className="mt-auto space-y-4">
                    <div className="h-8 w-full bg-white/5 rounded-lg" />

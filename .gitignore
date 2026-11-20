@@ -10,6 +10,14 @@ backend/__pycache__/
 backend/*.pyc
 backend/.venv/
 backend/venv/
+backend/nexaflow-local.db*
+__pycache__/
+*.py[cod]
+*.db
+*.db-shm
+*.db-wal
+*_log*.txt
+*_err*.txt
 backend/.pytest_cache/
 backend/.coverage
 backend/htmlcov/

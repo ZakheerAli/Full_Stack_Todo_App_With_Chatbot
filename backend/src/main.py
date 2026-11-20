@@ -5,15 +5,15 @@ from sqlmodel import SQLModel
 from .api.api import api_router
 from .websocket.endpoint import router as ws_router
 from .core.db import engine
+from .core.config import settings
 
 # Import all models so they are registered with SQLModel.metadata
 from .models.user import User
 from .models.task import Task
 from .models.activity import ActivityLog
 from .models.view import SavedView
+from .models.chat import Conversation, Message
 
-from fastapi.exceptions import RequestValidationError
-from fastapi.responses import JSONResponse
 import logging
 
 # Configure logging
@@ -29,20 +29,11 @@ async def lifespan(app: FastAPI):
 
 app = FastAPI(title="NexaFlow API", version="0.1.0", lifespan=lifespan)
 
-@app.exception_handler(RequestValidationError)
-async def validation_exception_handler(request, exc):
-    logger.error(f"Validation error: {exc.errors()}")
-    logger.error(f"Body: {await request.body()}")
-    return JSONResponse(
-        status_code=422,
-        content={"detail": exc.errors(), "body": str(await request.body())},
-    )
-
 # Configure CORS
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"], # Allow all for debugging CORS issues
-    allow_credentials=False,
+    allow_origins=settings.CORS_ORIGINS,
+    allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )

@@ -7,6 +7,7 @@ if TYPE_CHECKING:
     from .task import Task
     from .activity import ActivityLog
     from .view import SavedView
+    from .chat import Conversation
 
 class UserBase(SQLModel):
     email: str = Field(unique=True, index=True)
@@ -23,3 +24,4 @@ class User(UserBase, table=True):
     tasks: List["Task"] = Relationship(back_populates="user")
     activity_logs: List["ActivityLog"] = Relationship(back_populates="user")
     saved_views: List["SavedView"] = Relationship(back_populates="user")
+    conversations: List["Conversation"] = Relationship(back_populates="user")

@@ -27,10 +27,10 @@ export function Footer() {
               <Link href="#" className="w-10 h-10 bg-white/5 rounded-xl flex items-center justify-center hover:bg-primary/20 hover:text-primary transition-all">
                 <Twitter className="w-5 h-5" />
               </Link>
-              <Link href="#" className="w-10 h-10 bg-white/5 rounded-xl flex items-center justify-center hover:bg-primary/20 hover:text-primary transition-all">
+              <Link href="https://github.com/ZakheerAli" target="_blank" rel="noopener noreferrer" aria-label="GitHub profile of Zakheer Ali" className="w-10 h-10 bg-white/5 rounded-xl flex items-center justify-center hover:bg-primary/20 hover:text-primary transition-all">
                 <Github className="w-5 h-5" />
               </Link>
-              <Link href="#" className="w-10 h-10 bg-white/5 rounded-xl flex items-center justify-center hover:bg-primary/20 hover:text-primary transition-all">
+              <Link href="https://www.linkedin.com/in/zakheer-ali/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn profile of Zakheer Ali" className="w-10 h-10 bg-white/5 rounded-xl flex items-center justify-center hover:bg-primary/20 hover:text-primary transition-all">
                 <Linkedin className="w-5 h-5" />
               </Link>
             </div>

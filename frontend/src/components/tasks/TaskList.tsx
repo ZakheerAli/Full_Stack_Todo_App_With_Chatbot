@@ -10,12 +10,25 @@ import { Button } from '../ui/button';
 import { cn } from '../../lib/utils';
 
 interface TaskListProps {
+  tasks?: Task[];
+  allTasksCount?: number;
+  isFiltered?: boolean;
+  onResetFilters?: () => void;
   onEdit?: (task: Task) => void;
 }
 
-export function TaskList({ onEdit }: TaskListProps) {
-  const { tasks, isLoading, error, updateTask, deleteTask } = useTasks();
+export function TaskList({ 
+  tasks: propTasks, 
+  allTasksCount, 
+  isFiltered, 
+  onResetFilters, 
+  onEdit 
+}: TaskListProps) {
+  const { tasks: queryTasks, isLoading, error, updateTask, deleteTask } = useTasks();
   const { toast } = useToast();
+
+  const activeTasks = propTasks ?? queryTasks ?? [];
+  const totalCount = allTasksCount ?? (queryTasks?.length ?? 0);
 
   if (isLoading) {
     return (
@@ -48,7 +61,7 @@ export function TaskList({ onEdit }: TaskListProps) {
     );
   }
 
-  if (!tasks || tasks.length === 0) {
+  if (totalCount === 0) {
     return (
       <motion.div 
         initial={{ opacity: 0, scale: 0.95 }}
@@ -56,7 +69,7 @@ export function TaskList({ onEdit }: TaskListProps) {
         className="p-16 text-center border-2 border-dashed rounded-[2.5rem] border-white/5 bg-white/[0.02]"
       >
         <div className="w-20 h-20 bg-primary/10 rounded-[2rem] flex items-center justify-center mx-auto mb-8">
-          <SearchX className="h-10 w-10 text-primary" />
+          <Sparkles className="h-10 w-10 text-primary" />
         </div>
         <h3 className="text-2xl font-bold text-white mb-3">Clear Horizons</h3>
         <p className="text-muted-foreground max-w-sm mx-auto text-lg leading-relaxed">
@@ -66,10 +79,37 @@ export function TaskList({ onEdit }: TaskListProps) {
     );
   }
 
+  if (activeTasks.length === 0) {
+    return (
+      <motion.div 
+        initial={{ opacity: 0, scale: 0.95 }}
+        animate={{ opacity: 1, scale: 1 }}
+        className="p-16 text-center border-2 border-dashed rounded-[2.5rem] border-white/5 bg-white/[0.02]"
+      >
+        <div className="w-20 h-20 bg-white/5 rounded-[2rem] flex items-center justify-center mx-auto mb-6 text-muted-foreground">
+          <SearchX className="h-10 w-10" />
+        </div>
+        <h3 className="text-2xl font-bold text-white mb-2">No Matching Tasks</h3>
+        <p className="text-muted-foreground max-w-sm mx-auto text-base leading-relaxed mb-6">
+          No tasks matched your search or active filters.
+        </p>
+        {onResetFilters && (
+          <Button 
+            variant="outline" 
+            onClick={onResetFilters}
+            className="border-white/10 hover:bg-white/5 rounded-xl text-sm"
+          >
+            Reset Filters
+          </Button>
+        )}
+      </motion.div>
+    );
+  }
+
   return (
     <div className="grid gap-6">
       <AnimatePresence mode="popLayout">
-        {tasks.map((task) => (
+        {activeTasks.map((task) => (
           <TaskCard 
             key={task.task_id} 
             task={task} 

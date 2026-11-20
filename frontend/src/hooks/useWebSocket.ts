@@ -6,7 +6,7 @@ export function useWebSocket(onMessage: (data: any) => void) {
     useEffect(() => {
         // In real app, get token from authClient or cookies
         const token = "mock-token";
-        const socket = new WebSocket(`${process.env.NEXT_PUBLIC_WS_URL || 'ws://localhost:8000'}/ws?token=${token}`);
+        const socket = new WebSocket(`${process.env.NEXT_PUBLIC_WS_URL || 'ws://127.0.0.1:8000'}/ws?token=${token}`);
 
         socket.onmessage = (event) => {
             const data = JSON.parse(event.data);

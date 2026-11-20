@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 
 import { Providers } from "./Providers";
+import { FloatingChat } from "@/components/chat/FloatingChat";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -24,6 +25,7 @@ export default function RootLayout({
             Skip to main content
           </a>
           {children}
+          <FloatingChat />
         </Providers>
       </body>
     </html>

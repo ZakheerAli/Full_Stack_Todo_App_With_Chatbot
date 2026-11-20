@@ -10,28 +10,38 @@ import logging
 # Configure logging
 logger = logging.getLogger(__name__)
 
-security = HTTPBearer()
+security = HTTPBearer(auto_error=True)
 
-async def get_current_user(credentials: HTTPAuthorizationCredentials = Depends(security)) -> Optional[dict]:
+async def get_current_user(credentials: HTTPAuthorizationCredentials = Depends(security)) -> dict:
+    if not credentials:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Not authenticated",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
+    
     token = credentials.credentials
     try:
         payload = jwt.decode(token, settings.SECRET_KEY, algorithms=[ALGORITHM])
         user_id: str = payload.get("sub")
         if user_id is None:
             logger.error("Token decoded but 'sub' (user_id) is missing")
-            raise HTTPException(status_code=403, detail="Could not validate credentials")
+            raise HTTPException(
+                status_code=status.HTTP_401_UNAUTHORIZED, 
+                detail="Could not validate credentials",
+                headers={"WWW-Authenticate": "Bearer"},
+            )
         
         return {"user_id": user_id}
         
     except JWTError as e:
         logger.error(f"JWT Verification Failed: {str(e)}")
-        # Log the secret being used (partial) for debugging
-        secret_debug = settings.SECRET_KEY[:4] + "***" if settings.SECRET_KEY else "None"
-        logger.error(f"Using secret: {secret_debug}")
         raise HTTPException(
-            status_code=status.HTTP_403_FORBIDDEN,
+            status_code=status.HTTP_401_UNAUTHORIZED,
             detail=f"Could not validate credentials: {str(e)}",
+            headers={"WWW-Authenticate": "Bearer"},
         )
+
     except ValidationError as e:
         logger.error(f"Token Validation Error: {str(e)}")
         raise HTTPException(

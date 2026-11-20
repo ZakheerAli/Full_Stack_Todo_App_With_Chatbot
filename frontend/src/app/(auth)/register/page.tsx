@@ -112,7 +112,7 @@ export default function RegisterPage() {
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="password" name="password" className="text-sm font-medium text-muted-foreground ml-1">Password</Label>
+                  <Label htmlFor="password" className="text-sm font-medium text-muted-foreground ml-1">Password</Label>
                   <Input 
                     id="password" 
                     type="password" 

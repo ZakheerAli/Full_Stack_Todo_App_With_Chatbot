@@ -1,4 +1,5 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { API_BASE_URL } from '../lib/api';
 
 export interface Task {
     task_id: string;
@@ -9,10 +10,10 @@ export interface Task {
     due_date?: string;
 }
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:8000/api/v1';
+const API_URL = API_BASE_URL;
 
 async function fetchTasks(): Promise<Task[]> {
-    const token = localStorage.getItem('token');
+    const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null;
     console.log("fetchTasks: token exists?", !!token);
     const headers: HeadersInit = {
         'Content-Type': 'application/json',
@@ -24,14 +25,16 @@ async function fetchTasks(): Promise<Task[]> {
     const res = await fetch(`${API_URL}/tasks/`, { headers });
     if (!res.ok) {
         console.error("fetchTasks error:", res.status, res.statusText);
-        if (res.status === 401) throw new Error('Unauthorized');
+        if (res.status === 401 || res.status === 403) {
+            // Optional: handle logout if unauthorized
+        }
         throw new Error('Failed to fetch tasks');
     }
     return res.json();
 }
 
 async function createTask(task: Partial<Task>): Promise<Task> {
-    const token = localStorage.getItem('token');
+    const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null;
     console.log("createTask: token exists?", !!token);
     const headers: HeadersInit = {
         'Content-Type': 'application/json',
@@ -53,8 +56,7 @@ async function createTask(task: Partial<Task>): Promise<Task> {
 }
 
 async function updateTask(task: Partial<Task> & { task_id: string }): Promise<Task> {
-    const token = localStorage.getItem('token');
-    console.log("updateTask: token exists?", !!token);
+    const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null;
     const headers: HeadersInit = {
         'Content-Type': 'application/json',
     };
@@ -77,8 +79,7 @@ async function updateTask(task: Partial<Task> & { task_id: string }): Promise<Ta
 }
 
 async function deleteTask(taskId: string): Promise<void> {
-    const token = localStorage.getItem('token');
-    console.log("deleteTask: token exists?", !!token);
+    const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null;
     const headers: HeadersInit = {
         'Content-Type': 'application/json',
     };

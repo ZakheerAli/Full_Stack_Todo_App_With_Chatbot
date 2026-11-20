@@ -6,7 +6,7 @@ import { usePathname } from 'next/navigation';
 import { LanguageSwitcher } from './LanguageSwitcher';
 import { ThemeToggle } from './ThemeToggle';
 import { cn } from '../../lib/utils';
-import { LayoutDashboard, Settings, ListTodo, LogOut, Search, User } from 'lucide-react';
+import { LayoutDashboard, Settings, ListTodo, LogOut, Search, User, MessageSquare } from 'lucide-react';
 import { signOut } from '../../lib/auth-client';
 import { motion } from 'framer-motion';
 
@@ -15,6 +15,7 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
 
   const sidebarItems = [
     { name: 'Tasks', href: '/dashboard', icon: LayoutDashboard },
+    { name: 'AI Chat', href: '/dashboard/chat', icon: MessageSquare },
     { name: 'Saved Views', href: '/dashboard/views', icon: Search },
     { name: 'Settings', href: '/dashboard/settings', icon: Settings },
   ];
